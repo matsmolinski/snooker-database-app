@@ -1,0 +1,24 @@
+version: "2"
+services:
+  webapp:
+    depends_on:
+      - "postgres"
+    container_name: snooker_webapp
+    restart: always
+    build:
+      context: .
+      dockerfile: ./webapp/Dockerfile
+    volumes:
+      - ./webapp:/webapp
+    ports:
+      - "147:80"
+
+  postgres:
+    image: postgres
+    env_file:
+      - database.env
+    volumes:
+      - database-snooker:/var/lib/postgresql/data/
+
+volumes:
+  database-snooker:

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ankieta</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <form name="panel" method="POST">
+    <div class='panel'>
+      <header><strong>Ankieta</strong></header>
+      <br>
+
+      <div class="form-group">
+        <label for="eyecolor"><b>Wybierz płeć, z jaką się utożsamiasz:</b></label>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="question1" value="1" required>
+            mężczyzna</label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="question1" value="2" required>
+            kobieta</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question1" value="3"
+              required>inne/niezdecydowany</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Wybierz grupę wiekową:</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question2" value="1"
+              required> &lt; 20 lat</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question2" value="2"
+              required>20-39 lat</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question2" value="3"
+              required>40-59 lat</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question2" value="4"
+              required> 60+ lat</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Z jakiej miejscowości pochodzisz?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question3" value="1"
+              required> Wieś</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question3" value="2"
+              required>Miasto do 20 tysięcy mieszkańców</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question3" value="3"
+              required>Miasto od 20 do 100 tysięcy mieszkańców</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question3" value="4"
+              required> Miasto powyżej 100 tysięcy mieszkańców</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jakie masz wykształcenie?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question4" value="1"
+              required> podstawowe</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question4" value="2"
+              required>średnie</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question4" value="3"
+              required>policealne/niepełne wyższe</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question4" value="4"
+              required> wyższe</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Czy uważasz się za osobę religijną?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question5" value="1"
+              required> Tak, bardzo</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question5" value="2"
+              required>Tak, umiarkowanie</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question5" value="3"
+              required>Raczej nie</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"> <input class="form-check-input" type="radio" name="question5" value="4"
+              required> Zdecydowanie nie</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jak oceniasz swój stan finansowy?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question6" value="1"
+              required> Myślę o następnym dniu</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question6" value="2"
+              required>Mam przeciętny stan konta</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question6" value="3"
+              required>Mam pewien zapas</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question6" value="4"
+              required> Jestem zabezpieczony/zabezpieczona na dłuższy czas</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Czy czujesz potrzebę ciągłego rozwoju?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question7" value="1"
+              required>Tak, nigdy nie przestanę się rozwijać</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question7" value="2"
+              required>Myślę, że w pewnym momencie będę zadowolony/zadowolona ze swoich
+            osiągnięć</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question7" value="3"
+              required>Nie odczuwam potrzeby ciągłego rozwijania się</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jakie masz nastawienie?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question8" value="1"
+              required> optymizm</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question8" value="2"
+              required>raczej optymizm</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question8" value="3" required>
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question8" value="3"
+              required>raczej pesymizm</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question8" value="4" required>
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question8" value="4"
+              required> pesymizm</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jakie kolory preferujesz?</b></label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question9" value="1" required>
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question9" value="1"
+              required> Ciepłe, kontrastujące</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question9" value="2" required>
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question9" value="2"
+              required>Chłodniejsze, stonowane</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question9" value="3" required>
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question9" value="3"
+              required>Nie mam preferencji</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>W jakim otoczeniu czujesz się najlepiej?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question10" value="1"
+              required> Uporządkowanym, gdzie wszystko ma swoje miejsce</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question10" value="2"
+              required>Schludnym, ale swobodnym</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question10" value="3"
+              required>Raczej chaotycznym</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question10" value="4"
+              required> Bardzo chaotycznym, nieograniczonym</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jak często czytasz książki?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question11" value="1"
+              required> Czytam codziennie</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question11" value="2"
+              required>Czytam dosyć często</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question11" value="3"
+              required>Czasem zdarza mi się coś przeczytać</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question11" value="4"
+              required> Nie czytam książek</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jakiej muzyki słuchasz najczęściej?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question12" value="1"
+              required> Pop</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question12" value="2"
+              required>Klasyczna/instrumentalna</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question12" value="3"
+              required>Rap</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question12" value="4"
+              required> Disco-polo</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question12" value="5"
+              required> Żadnej z powyższych/nie słucham muzyki</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jaką karierę chciałbyś/chciałabyś obrać (ze względu na zainteresowanie)?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question13" value="1"
+              required> Artystyczną</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question13" value="2"
+              required>Biznesową/finansową</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question13" value="3"
+              required>Naukową</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question13" value="4"
+              required> Inżynierską/rzemieślniczą</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question13" value="5"
+              required> Inną</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jaką metodą zwykle rozwiązujesz konflikty?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question14" value="1"
+              required> Przekonujesz drugą stronę do swojej racji</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"> <input class="form-check-input" type="radio" name="question14" value="2"
+              required>Raczej szukasz kompromisu</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question14" value="3"
+              required>Nie mam jednej strategii</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jak zwykle podejmujesz decyzje?</b></label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question15" value="1" required>
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question15" value="1"
+              required> Wolę podjąć szybką decyzję</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question15" value="2"
+              required>Wolę przeanalizować wszystkie możliwości przed podjęciem decyzji</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question15" value="3"
+              required>Różnie, w zależności od sytuacji</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Czy angażujesz się w działalność charytatywną?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question16" value="1"
+              required> Gdy tylko mogę</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question16" value="2"
+              required>Od czasu do czasu</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question16" value="3"
+              required>Angażowałbym/angażowałabym się, gdybym miał(-a) lepszą sytuację finansową</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question16" value="4"
+              required> Nie angażuję się</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Co wolałbyś/wolałabyś zrobić?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question17" value="1"
+              required> Odłożyć część zdobytych pieniędzy, żeby się zabezpieczyć na
+            przyszłość</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question17" value="2"
+              required>Zainwestować część zdobytych pieniędzy, ryzykując ich utratę</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question17" value="3"
+              required>Nie przejmować się pieniędzmi</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Czy interesują cię aktywności związane z ryzykiem (np. sporty ekstremalne)?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question18" value="1"
+              required> Życie bez ryzyka byłoby nudne</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question18" value="2"
+              required>W umiarkowanym stopniu</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question18" value="3"
+              required>W życiu nie ma miejsca na zbędne ryzyko</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>W dzieciństwie:</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question19" value="1"
+              required> Starałem/starałam się pozostać niezauważonym w tłumie</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question19" value="2"
+              required>Buntowałem/buntowałam się tak, jak inni rówieśnicy</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question19" value="3"
+              required>Podążałem/podążałam własną ścieżką, nie patrząc na innych</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Czy często poszukujesz nowych doznań (smakowych, sportowych, także w innych dziedzinach
+            życia)?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question20" value="1"
+              required> Zawsze jestem otwarty na nowości</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question20" value="2"
+              required>Lubię nowe rzeczy, ale w granicach bezpieczeństwa</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question20" value="3"
+              required>Raczej wolę to, co już znam</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question20" value="4"
+              required> Nie potrzebuję nowości w życiu</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Jaki masz stosunek do przestrzegania prawa/przepisów?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question21" value="1"
+              required> Prawa należy bezwględnie przestrzegać</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question21" value="2"
+              required>Nie trzeba się zgadzać z prawem, ale powinno się działać w jego
+            granicach</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question21" value="3"
+              required>Łamanie prawa może być uzasadnione</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question21" value="4"
+              required> Nie mam zdania</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Co uważasz o pomocy socjalnej dla najbiedniejszych?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question22" value="1"
+              required> Należy wspierać finansowo i stwarzać miejsca pracy</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question22" value="2"
+              required>Należy tylko wspierać poszukiwanie pracy</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question22" value="3"
+              required>Nie należy ingerować w rynek pracy</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question22" value="4"
+              required> Nie mam zdania</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Co uważasz o związkach partnerskich?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question23" value="1"
+              required>Jestem za, z prawem do adopcji</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question23" value="2"
+              required>Jestem za, bez prawa do adopcji</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question23" value="3"
+              required>Jestem przeciw</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question23" value="4"
+              required> Nie mam zdania</label>
+        </div>
+      </div>
+
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Co uważasz o prawie do posiadania broni?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question24" value="1"
+              required>Jestem za pełną legalizacją</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question24" value="2"
+              required>Jestem za utrzymaniem bieżącego stanu</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question24" value="3"
+              required>Jestem za dalszym ograniczeniem dostępu do broni</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question24" value="4"
+              required> Nie mam zdania</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Który z amerykańskich polityków przemawia do Ciebie bardziej?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question25" value="1"
+              required>Barack Obama</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question25" value="2"
+              required>Donald Trump</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"> <input class="form-check-input" type="radio" name="question25" value="3"
+              required>Nie mam zdania</label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="eyecolor"><b>Gdyby nie było innych opcji, którą partię byś wybrał/wybrała?</b></label>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question26" value="1"
+              required>Zdecydowanie PiS</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"> <input class="form-check-input" type="radio" name="question26" value="2"
+              required>Raczej PiS</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question26" value="3"
+              required>Raczej PO</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question26" value="4"
+              required> Zdecydowanie PO</label>
+        </div>
+        <div class="form-check">
+
+          <label class="form-check-label"><input class="form-check-input" type="radio" name="question26" value="5"
+              required> Żadna/nie interesuję się polityką</label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary normalbutton">Prześlij</button>
+    </div>
+  </form>
+</body>
+
+</html>

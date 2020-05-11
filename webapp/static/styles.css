@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: teal;
+}
+
+header {
+    font-size: 40px;
+    color: black;
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+.input-80 {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.panel {
+    padding: 16px;
+    background-color: white;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.normalbutton {
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 60%;
+    opacity: 0.9;
+    font-size: larger;
+}
+

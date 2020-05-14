@@ -18,7 +18,19 @@ class Player(db.Model):
     nickname = db.Column(db.String(50))
     nationality = db.Column(db.String(30), nullable=False)
     turned_pro = db.Column(db.DateTime, nullable=False)
-    highest_break = db.Column(db.Float, nullable=False)
+    highest_break = db.Column(db.Integer, nullable=False)
+    ast = db.Column(db.Float)
+
+    def set_ast(self):
+        sum = 0
+        for x in self.matches_p1:
+            sum += x.ast1
+        for x in self.matches_p2:
+            sum += x.ast2
+        if len(self.matches_p1) + len(self.matches_p2) != 0:
+            self.ast = sum / (len(self.matches_p1) + len(self.matches_p2))
+        else:
+            self.ast = 0
 
     def __repr__(self):
         return '<Player ' + self.first_name + ' ' + self.last_name + ' from ' + self.nationality + '>'
@@ -58,26 +70,35 @@ class Match(db.Model):
     player_one_id = db.Column(db.Integer, db.ForeignKey("player.id"))
     player_two_id = db.Column(db.Integer, db.ForeignKey("player.id"))
     tournament_id = db.Column(db.Integer, db.ForeignKey("tournament.id"))
-    player_one = db.relationship("Player", foreign_keys=[
-                                 player_one_id], backref="matches_p1")
-    player_two = db.relationship("Player", foreign_keys=[
-                                 player_two_id], backref="matches_p2")
+    player_one = db.relationship("Player", foreign_keys="Match.player_one_id", backref="matches_p1")
+    player_two = db.relationship("Player", foreign_keys="Match.player_two_id", backref="matches_p2")
     tournament = db.relationship("Tournament", backref="matches")
     score = db.Column(db.String(7))
     winner = db.Column(db.Integer)
     t_round = db.Column(db.String(5))
+    ast1 = db.Column(db.Float)
+    @db.validates("ast1")
+    def update_ast1(self, key, value):
+        print(self.player_one)
+
+    ast2 = db.Column(db.Float)
+    @db.validates("ast2")
+    def update_ast2(self, key, value):
+        print(self.player_two)
 
     def __repr__(self):
         return '< ' + self.player_one.first_name + ' ' + self.player_one.last_name + ' ' + self.score + ' ' + self.player_two.first_name + ' ' + self.player_two.last_name + '>'
 
-    def __init__(self, tournament_id, player_one_id, player_two_id, score, winner, t_round):
-        self.id = None
+    def __init__(self, tournament_id, player_one_id, player_two_id, score, winner, t_round, ast1, ast2):
+
         self.tournament_id = tournament_id
         self.player_one_id = player_one_id
         self.player_two_id = player_two_id
         self.score = score
         self.winner = winner
         self.t_round = t_round
+        self.ast1 = ast1
+        self.ast2 = ast2
 
 
 class Frame(db.Model):
@@ -131,7 +152,13 @@ db.session.add(Tournament('Welsh open', date(2020, 2, 10),
 db.session.add(Player('Neil', 'Robertson', 'Australia', date(
     1998, 6, 1), 147, nickname="The Thunder from Down Under"))
 db.session.add(Player('Jamie', 'Clarke', 'Welsh', date(2018, 6, 1), 127))
-db.session.add(Match(1, 1, 2, '4-2', 1, 'L128'))
+m = Match(1, 1, 2, '4-2', 1, 'L128', 18.1, 28.1)
+db.session.add(m)
+db.session.commit()
+db.session.refresh(m)
+print(m.player_one)
+#match.player_one.set_ast()
+#match.player_two.set_ast()
 
 db.session.add(Frame(1, 1, 2, '20-57', 2))
 db.session.add(Frame(1, 1, 2, '68-34', 1))

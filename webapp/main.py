@@ -77,14 +77,8 @@ class Match(db.Model):
     winner = db.Column(db.Integer)
     t_round = db.Column(db.String(5))
     ast1 = db.Column(db.Float)
-    @db.validates("ast1")
-    def update_ast1(self, key, value):
-        print(self.player_one)
-
     ast2 = db.Column(db.Float)
-    @db.validates("ast2")
-    def update_ast2(self, key, value):
-        print(self.player_two)
+
 
     def __repr__(self):
         return '< ' + self.player_one.first_name + ' ' + self.player_one.last_name + ' ' + self.score + ' ' + self.player_two.first_name + ' ' + self.player_two.last_name + '>'
@@ -156,9 +150,8 @@ m = Match(1, 1, 2, '4-2', 1, 'L128', 18.1, 28.1)
 db.session.add(m)
 db.session.commit()
 db.session.refresh(m)
-print(m.player_one)
-#match.player_one.set_ast()
-#match.player_two.set_ast()
+m.player_one.set_ast()
+m.player_two.set_ast()
 
 db.session.add(Frame(1, 1, 2, '20-57', 2))
 db.session.add(Frame(1, 1, 2, '68-34', 1))
@@ -211,10 +204,35 @@ def get_thanks():
 
 @app.route('/test', methods=['GET'])
 def get_test():
+    sth = Match.query
+    for match in sth:
+        print(match, [x for x in match.frames if x.winner == 1])
+    return 'ok', 200
+
+
+
+
+@app.route('/player', methods=['POST'])
+def add_player():
     sth = Match.query.options(db.joinedload('frames'))
     for match in sth:
         print(match, [x for x in match.frames if x.winner == 1])
     return 'ok', 200
+
+@app.route('/tournament', methods=['POST'])
+def add_tournament():
+    sth = Match.query.options(db.joinedload('frames'))
+    for match in sth:
+        print(match, [x for x in match.frames if x.winner == 1])
+    return 'ok', 200
+
+@app.route('/match', methods=['POST'])
+def add_match():
+    sth = Match.query.options(db.joinedload('frames'))
+    for match in sth:
+        print(match, [x for x in match.frames if x.winner == 1])
+    return 'ok', 200
+
 
 
 @app.errorhandler(404)

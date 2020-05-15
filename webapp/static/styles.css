@@ -35,3 +35,14 @@ header {
     font-size: larger;
 }
 
+.row {
+    display: flex;
+  }
+  
+  .column {
+    width: 50%;
+  }
+
+  .column3 {
+    width: 33%;
+  }

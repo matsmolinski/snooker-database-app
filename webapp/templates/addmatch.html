@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snooker database</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class='panel'>
+        <header><strong>Add tournament</strong></header>
+        <div class="row">
+            <div class="column">
+                <header>Players</header>
+                {%for i in range(0, player_length)%}
+                <p>{{ players[i].id }}. {{ players[i].first_name }} {{ players[i].last_name }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="column">
+                <header>Tournaments</header>
+                {%for i in range(0, tournament_length)%}
+                <p>{{ tournaments[i].id }}. {{ tournaments[i].name }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <form method="POST">
+            <label><b>Player 1 ID</b>
+                <br>
+                <input id="id1" type="number" placeholder="Enter id" name="id1" required>
+            </label>
+            <br>
+            <label><b>Player 2 ID</b>
+                <br>
+                <input id="id2" type="number" placeholder="Enter id" name="id2" required>
+            </label>
+            <br>
+            <label><b>Player 1 AST</b>
+                <br>
+                <input id="ast1" type="text" placeholder="Enter ast" name="ast1" required>
+            </label>
+            <br>
+            <label><b>Player 2 AST</b>
+                <br>
+                <input id="ast2" type="text" placeholder="Enter ast" name="ast2" required>
+            </label>
+            <br>
+            <label><b>Tournament ID</b>
+                <br>
+                <input id="idt" type="number" placeholder="Enter id" name="idt" required>
+            </label>
+            <br>
+            <label><b>Round</b>
+                <br>
+                <input id="r" type="text" placeholder="Enter round" name="round" required>
+            </label>
+            <br>
+            <label><b>Score</b>
+                <br>
+                <input id="score" type="text" placeholder="Enter score" name="score" required>
+            </label>
+            <br>
+            {%for i in range(0, 35)%}
+            <p><input id='{{i}} b1' type="text" placeholder="break" name='{{i}} b1'>
+                <input id='{{i}} s1' type="number" placeholder="score" name='{{i}} s1'>
+                -
+                <input id='{{i}} s2' type="number" placeholder="score" name='{{i}} s2'>
+                <input id='{{i}} b2' type="text" placeholder="break" name='{{i}} b2'></p>
+
+            {% endfor %}
+            <button type="submit" class="btn btn-primary normalbutton">Add</button>
+            <br>
+            <a href="/">Go back</a>
+        </form>
+    </div>
+</body>

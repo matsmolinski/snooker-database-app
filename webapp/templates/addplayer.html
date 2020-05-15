@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snooker database</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class='panel'>
+        <header><strong>Add player</strong></header>
+        <form method="POST">
+            <label><b>First name</b>
+                <br>
+                <input id="fname" type="text" placeholder="Enter first name" name="firstname" required>
+            </label>
+            <br>
+            <label><b>Last name</b>
+                <br>
+                <input id="lname" type="text" placeholder="Enter last name" name="lastname" required>
+            </label>
+            <br>
+            <label><b>Nickname (optional)</b>
+                <br>
+                <input id="nname" type="text" placeholder="Enter nickname" name="nickname">
+            </label>
+            <br>
+            <label><b>Turned pro</b>
+                <br>
+                <input id="date" type="date" name="date" required>
+            </label>
+            <br>
+            <label><b>Nationality</b>
+                <br>
+                <input id="nat" type="text" placeholder="Enter nationality" name="nationality" required>
+            </label>
+            <br>
+            <label><b>Highest break</b>
+                <br>
+                <input id="hb" type="number" placeholder="Enter high break" name="highbreak" required>
+            </label>
+            <br>
+            <button type="submit" class="btn btn-primary normalbutton">Add</button>
+            <br>
+            <a href="/">Go back</a>
+        </form>
+    </div>
+</body>

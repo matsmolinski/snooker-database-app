@@ -32,6 +32,12 @@ class Player(db.Model):
         else:
             self.ast = 0
 
+    def set_highbreak(self):
+        for brk in self.breaks:
+            print(brk.score)
+            if brk.score > self.highest_break:
+                self.highest_break = brk.score
+
     def __repr__(self):
         return '<Player ' + self.first_name + ' ' + self.last_name + ' from ' + self.nationality + '>'
 
@@ -70,15 +76,16 @@ class Match(db.Model):
     player_one_id = db.Column(db.Integer, db.ForeignKey("player.id"))
     player_two_id = db.Column(db.Integer, db.ForeignKey("player.id"))
     tournament_id = db.Column(db.Integer, db.ForeignKey("tournament.id"))
-    player_one = db.relationship("Player", foreign_keys="Match.player_one_id", backref="matches_p1")
-    player_two = db.relationship("Player", foreign_keys="Match.player_two_id", backref="matches_p2")
+    player_one = db.relationship(
+        "Player", foreign_keys="Match.player_one_id", backref="matches_p1")
+    player_two = db.relationship(
+        "Player", foreign_keys="Match.player_two_id", backref="matches_p2")
     tournament = db.relationship("Tournament", backref="matches")
     score = db.Column(db.String(7))
     winner = db.Column(db.Integer)
     t_round = db.Column(db.String(5))
     ast1 = db.Column(db.Float)
     ast2 = db.Column(db.Float)
-
 
     def __repr__(self):
         return '< ' + self.player_one.first_name + ' ' + self.player_one.last_name + ' ' + self.score + ' ' + self.player_two.first_name + ' ' + self.player_two.last_name + '>'
@@ -165,41 +172,8 @@ db.session.commit()
 
 
 @app.route('/', methods=['GET'])
-def get_survey():
-    lock = request.cookies.get('lock')
-    if lock == '1':
-        return redirect(url_for('get_thanks'))
-    else:
-        return render_template("survey.html")
-
-
-@app.route('/', methods=['POST'])
-def upload_survey():
-    lock = request.cookies.get('lock')
-    if lock == '1':
-        return redirect(url_for('get_thanks'))
-    correct = True
-    if correct:
-        survey = Survey(request.form['question1'], request.form['question2'], request.form['question3'], request.form['question4'], request.form['question5'], request.form['question6'],
-                        request.form['question7'], request.form['question8'], request.form['question9'], request.form[
-                            'question10'], request.form['question11'], request.form['question12'],
-                        request.form['question13'], request.form['question14'], request.form['question15'], request.form[
-                            'question16'], request.form['question17'], request.form['question18'],
-                        request.form['question19'], request.form['question20'], request.form['question21'], request.form[
-                            'question22'], request.form['question23'], request.form['question24'],
-                        request.form['question25'], request.form['question26'])
-        db.session.add(survey)
-        db.session.commit()
-        resp = make_response(redirect(url_for('get_thanks')))
-        resp.set_cookie('lock', '1')
-        return resp  # redirect(url_for('get_thanks'))
-    else:
-        return render_template("survey.html")
-
-
-@app.route('/thanks', methods=['GET'])
-def get_thanks():
-    return render_template("thanks.html")
+def get_interface():
+    return render_template("mainpage.html")
 
 
 @app.route('/test', methods=['GET'])
@@ -210,30 +184,125 @@ def get_test():
     return 'ok', 200
 
 
+@app.route('/player', methods=['GET'])
+def add_player_template():
+    return render_template("addplayer.html")
 
 
 @app.route('/player', methods=['POST'])
 def add_player():
-    sth = Match.query.options(db.joinedload('frames'))
-    for match in sth:
-        print(match, [x for x in match.frames if x.winner == 1])
-    return 'ok', 200
+    player = Player(request.form.get("firstname"), request.form.get("lastname"), request.form.get(
+        "nationality"), request.form.get("date"), request.form.get("highbreak"), request.form.get("nickname"))
+    db.session.add(player)
+    db.session.commit()
+    return render_template("addplayer.html")
+
+
+@app.route('/tournament', methods=['GET'])
+def add_tournament_template():
+    return render_template("addtournament.html")
+
 
 @app.route('/tournament', methods=['POST'])
 def add_tournament():
-    sth = Match.query.options(db.joinedload('frames'))
-    for match in sth:
-        print(match, [x for x in match.frames if x.winner == 1])
-    return 'ok', 200
+    tournament = Tournament(request.form.get("name"), request.form.get("datefrom"), request.form.get(
+        "dateto"), request.form.get("venue"), not request.form.get("ranked") == None)
+    db.session.add(tournament)
+    db.session.commit()
+    return render_template("addtournament.html")
+
+
+@app.route('/match', methods=['GET'])
+def add_match_template():
+    players = Player.query.all()
+    tours = Tournament.query.all()
+    return render_template("addmatch.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours))
+
 
 @app.route('/match', methods=['POST'])
 def add_match():
-    sth = Match.query.options(db.joinedload('frames'))
-    for match in sth:
-        print(match, [x for x in match.frames if x.winner == 1])
-    return 'ok', 200
+    scores = request.form.get('score').split("-")
+    match = Match(request.form.get('idt'), request.form.get('id1'), request.form.get('id2'), request.form.get(
+        'score'), 1 if scores[0] > scores[1] else 2, request.form.get('round'), request.form.get('ast1'), request.form.get('ast2'))
+    db.session.add(match)
+    db.session.commit()
+    db.session.refresh(match)
+    match.player_one.set_ast()
+    match.player_two.set_ast()
+    players = Player.query.all()
+    tours = Tournament.query.all()
+    for i in range(0, int(scores[0]) + int(scores[1])):
+        breaks_p1 = request.form.get(str(i) + " b1").replace(" ", "").split(",")
+        breaks_p2 = request.form.get(str(i) + " b2").replace(" ", "").split(",")
+        score_p1 = request.form.get(str(i) + " s1")
+        score_p2 = request.form.get(str(i) + " s2")
+        winner = 1 if int(score_p1) > int(score_p2) else 2
+        score = score_p1 + "-" + score_p2
+        frame = Frame(match.id, request.form.get('id1'), request.form.get('id2'), score, winner)
+        db.session.add(frame)
+        db.session.commit()
+        db.session.refresh(frame)
+        for brk in breaks_p1:
+            if brk != '':
+                db.session.add(Break(int(brk),request.form.get('id1'), frame.id))
+        for brk in breaks_p2:
+            if brk != '':
+                db.session.add(Break(int(brk),request.form.get('id2'), frame.id))   
+        db.session.commit()
+    db.session.refresh(match)
+    match.player_one.set_highbreak()
+    match.player_two.set_highbreak()
+    db.session.commit()
+    return render_template("addmatch.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours))
 
+@app.route('/stats', methods=['GET'])
+def stats_template():
+    players = Player.query.all()
+    tours = Tournament.query.all()
+    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), answer=None)
 
+@app.route('/stats/frame-efficiency', methods=['POST'])
+def stats_frame_efficiency():
+    player = Player.query.get(int(request.form.get('player')))
+    win = 0
+    all = 0
+    for frame in player.frames_p1:
+        all = all + 1
+        if frame.winner == 1:
+            win = win + 1
+    for frame in player.frames_p2:
+        all = all + 1
+        if frame.winner == 2:
+            win = win + 1
+    players = Player.query.all()
+    tours = Tournament.query.all()
+    if all > 0:
+        answer = "" + str(round(win/all, 4) * 100) + "% (" + str(win) + "/" + str(all) + ")"
+    else:
+        answer = "No records found"
+    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), answer=answer)
+
+@app.route('/stats/wins-by-nation', methods=['POST'])
+def stats_wins_by_nation():
+    players = Player.query.filter_by(nationality=request.form.get('nation'))
+    win = 0
+    all = 0
+    for player in players:
+        for match in player.matches_p1:
+            all = all + 1
+            if match.winner == 1:
+                win = win + 1
+        for match in player.matches_p2:
+            all = all + 1
+            if match.winner == 2:
+                win = win + 1
+        players = Player.query.all()
+    tours = Tournament.query.all()
+    if all > 0:
+        answer = "" + str(round(win/all, 4) * 100) + "% (" + str(win) + "/" + str(all) + ")"
+    else:
+        answer = "No records found"
+    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), answer=answer)
 
 @app.errorhandler(404)
 def page_not_found(e):

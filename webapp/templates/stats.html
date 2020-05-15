@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snooker database</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class='panel'>
+        {% if answer != None %}
+        <header>Answer</header>
+        <p>{{ answer }}</p>
+        {% endif %}
+        <div class="row">
+            <div class="column">
+                <header>Players</header>
+                {%for i in range(0, player_length)%}
+                <p>{{ players[i].id }}. {{ players[i].first_name }} {{ players[i].last_name }}
+                    ({{ players[i].nationality }})</p>
+                {% endfor %}
+            </div>
+
+            <div class="column">
+                <header>Tournaments</header>
+                {%for i in range(0, tournament_length)%}
+                <p>{{ tournaments[i].id }}. {{ tournaments[i].name }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        <form method="POST">
+            <div class="row">
+                <div class="column3">
+                    <label><b>Player</b>
+                        <br>
+                        <input id="player" type="text" placeholder="Enter player id" name="player">
+                    </label>
+                </div>
+                <div class="column3">
+                    <label><b>Nationality</b>
+                        <br>
+                        <input id="nation" type="text" placeholder="Enter nationality" name="nation">
+                    </label>
+                </div>
+                <div class="column3">
+                    <label><b>Tournament</b>
+                        <br>
+                        <input id="tournament" type="text" placeholder="Enter tournament id" name="tournament">
+                    </label>
+                </div>
+            </div>
+            <header><strong>Choose option</strong></header>
+            <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/frame-efficiency"> Frame
+                efficiency [PLAYER]</button>
+
+            <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/wins-by-nation"> Wins by
+                nation [NATIONALITY]</button>
+        </form>
+        <a href="/">Go back</a>
+    </div>
+</body>

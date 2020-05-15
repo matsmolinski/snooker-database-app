@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snooker database</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class='panel'>
+        <header><strong>Add tournament</strong></header>
+        <form method="POST">
+            <label><b>Name</b>
+                <br>
+                <input id="name" type="text" placeholder="Enter name" name="name" required>
+            </label>
+            <br>
+            <label><b>From:</b>
+                <br>
+                <input id="fdate" type="date" name="datefrom" required>
+            </label>
+            <br>
+            <label><b>To:</b>
+                <br>
+                <input id="tdate" type="date" name="dateto" required>
+            </label>
+            <br>
+            <label><b>Venue</b>
+                <br>
+                <input id="ven" type="text" placeholder="Enter venue" name="venue" required>
+            </label>
+            <br>
+            <input id="hb" type="checkbox" name="ranked">
+            <label><b>Ranked</b>
+            </label>
+            <br>
+            <button type="submit" class="btn btn-primary normalbutton">Add</button>
+            <br>
+            <a href="/">Go back</a>
+        </form>
+    </div>
+</body>

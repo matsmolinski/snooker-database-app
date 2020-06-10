@@ -304,6 +304,24 @@ def stats_wins_by_nation():
         answer = "No records found"
     return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), answer=answer)
 
+@app.route('/draw', methods=['GET'])
+def get_draw_selection():
+    tournaments = Tournament.query.all()
+    ts = []
+    for t in tournaments:
+        tr = {}
+        tr['id'] = t.id
+        tr['name'] = t.name
+        tr['year'] = t.date_from.year
+        ts.append(tr)
+
+    return render_template("drawselection.html", tournament=ts, tournament_length=len(tournaments))
+
+@app.route('/tournament/<id>', methods=['GET'])
+def get_draw(id):
+    tournament = Tournament.query.get(id)
+    return render_template("bracket.html",year = tournament.date_from.year, tournament=tournament)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

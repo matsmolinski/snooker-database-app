@@ -20,15 +20,15 @@
             <div class="column">
                 <header>Players</header>
                 {%for i in range(0, player_length)%}
-                <p>{{ players[i].id }}. {{ players[i].first_name }} {{ players[i].last_name }}
-                    ({{ players[i].nationality }})</p>
+                <p><a href="/player/{{players[i].id}}">{{ players[i].id }}. {{ players[i].first_name }} {{ players[i].last_name }}
+                    ({{ players[i].nationality }})</a></p>
                 {% endfor %}
             </div>
 
             <div class="column">
                 <header>Tournaments</header>
                 {%for i in range(0, tournament_length)%}
-                <p>{{ tournaments[i].id }}. {{ tournaments[i].name }}</p>
+                <a href="/player/{{players[i].id}}">{{ tournaments[i].id }}. {{ tournaments[i].name }} {{years[i]}}</a>
                 {% endfor %}
             </div>
         </div>
@@ -39,26 +39,56 @@
                         <br>
                         <input id="player" type="text" placeholder="Enter player id" name="player">
                     </label>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/frame-efficiency">
+                        Frame
+                        efficiency [PLAYER]</button>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/frame-efficiency">
+                        Match
+                        efficiency [PLAYER]</button>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/century-rate">
+                        Century rate
+                        by frames [PLAYER]</button>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/frame-efficiency">
+                        Century rate
+                        by matches [PLAYER]</button>
                 </div>
                 <div class="column3">
                     <label><b>Nationality</b>
                         <br>
                         <input id="nation" type="text" placeholder="Enter nationality" name="nation">
                     </label>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/wins-by-nation"> Frame
+                        ef.
+                        by
+                        nation [NATIONALITY]</button>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/wins-by-nation">
+                        Match ef. by nation [NATIONALITY]</button>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/wins-by-nation">
+                        Century rate
+                        by frames in
+                        nation [NATIONALITY]</button>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/wins-by-nation">
+                        Century rate
+                        by matches in
+                        nation [NATIONALITY]</button>
                 </div>
                 <div class="column3">
                     <label><b>Tournament</b>
                         <br>
                         <input id="tournament" type="text" placeholder="Enter tournament id" name="tournament">
                     </label>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/frame-efficiency">
+                        Century rate
+                        by matches [TOURNAMENT]</button>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/frame-efficiency">
+                        Average score [TOURNAMENT]</button>
+                    <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/frame-efficiency">
+                        Century count [TOURNAMENT]</button>
                 </div>
             </div>
-            <header><strong>Choose option</strong></header>
-            <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/frame-efficiency"> Frame
-                efficiency [PLAYER]</button>
 
-            <button type="submit" class="btn btn-primary normalbutton" formaction="/stats/wins-by-nation"> Wins by
-                nation [NATIONALITY]</button>
+
+
         </form>
         <a href="/">Go back</a>
     </div>

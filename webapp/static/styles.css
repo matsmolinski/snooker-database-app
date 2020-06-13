@@ -33,8 +33,11 @@ header {
     width: 60%;
     opacity: 0.9;
     font-size: larger;
+    background-color: green;
 }
-
+.button:hover {
+    background-color: #4CAF50;
+}
 .row {
     display: flex;
   }

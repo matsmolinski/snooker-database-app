@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from datetime import date
 import requests
 import json
+import copy
 
 
 app = Flask(__name__)
@@ -197,6 +198,25 @@ def add_player():
     db.session.commit()
     return render_template("addplayer.html")
 
+@app.route('/player/<id>', methods=['GET'])
+def get_player(id):
+    player = Player.query.get(id)
+    return render_template("player.html", player=player, year=player.turned_pro.year)
+
+@app.route('/player/<id>/edit', methods=['GET'])
+def edit_player(id):
+    player = Player.query.get(id)
+    month = ('0' if player.turned_pro.month < 10 else '') + str(player.turned_pro.month)
+    day = ('0' if player.turned_pro.day < 10 else '') + str(player.turned_pro.day)
+    datee = str(player.turned_pro.year) + '-' + month + '-' + day
+    print(datee)
+    return render_template("editplayer.html", player=player, turned_pro=datee)
+
+@app.route('/player/<id>/edit', methods=['POST'])
+def update_player(id):
+    player = Player.query.filter_by(id=id).update(dict(first_name=request.form.get("firstname"),last_name=request.form.get("lastname"), nationality=request.form.get("nationality"),turned_pro=request.form.get("date"), highest_break=request.form.get("highbreak"), nickname=request.form.get("nickname")))
+    db.session.commit()
+    return redirect(url_for('get_player', id=id))
 
 @app.route('/tournament', methods=['GET'])
 def add_tournament_template():
@@ -216,7 +236,10 @@ def add_tournament():
 def add_match_template():
     players = Player.query.all()
     tours = Tournament.query.all()
-    return render_template("addmatch.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours))
+    years = []
+    for tour in tours:
+        years.append(tour.date_from.year)
+    return render_template("addmatch.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), years=years)
 
 
 @app.route('/match', methods=['POST'])
@@ -231,6 +254,9 @@ def add_match():
     match.player_two.set_ast()
     players = Player.query.all()
     tours = Tournament.query.all()
+    years = []
+    for tour in tours:
+        years.append(tour.date_from.year)
     for i in range(0, int(scores[0]) + int(scores[1])):
         breaks_p1 = request.form.get(str(i) + " b1").replace(" ", "").split(",")
         breaks_p2 = request.form.get(str(i) + " b2").replace(" ", "").split(",")
@@ -253,13 +279,16 @@ def add_match():
     match.player_one.set_highbreak()
     match.player_two.set_highbreak()
     db.session.commit()
-    return render_template("addmatch.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours))
+    return render_template("addmatch.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), years=years)
 
 @app.route('/stats', methods=['GET'])
 def stats_template():
     players = Player.query.all()
     tours = Tournament.query.all()
-    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), answer=None)
+    years = []
+    for tour in tours:
+        years.append(tour.date_from.year)
+    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), years=years, answer=None)
 
 @app.route('/stats/frame-efficiency', methods=['POST'])
 def stats_frame_efficiency():
@@ -276,11 +305,31 @@ def stats_frame_efficiency():
             win = win + 1
     players = Player.query.all()
     tours = Tournament.query.all()
+    years = []
+    for tour in tours:
+        years.append(tour.date_from.year)
     if all > 0:
         answer = "" + str(round(win/all, 4) * 100) + "% (" + str(win) + "/" + str(all) + ")"
     else:
         answer = "No records found"
-    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), answer=answer)
+    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), years=years, answer=answer)
+
+@app.route('/stats/century-rate', methods=['POST'])
+def stats_century_rate():
+    player = Player.query.get(int(request.form.get('player')))
+    frames = len(player.frames_p1) + len(player.frames_p2)
+    centuries = sum(1 if brk.score >= 100 else 0 for brk in player.breaks)
+    players = Player.query.all()
+    tours = Tournament.query.all()
+    years = []
+    for tour in tours:
+        years.append(tour.date_from.year)
+    if frames > 0:
+        answer = "" + str(round(centuries/frames, 4) * 100) + "% (" + str(centuries) + "/" + str(frames) + ")"
+    else:
+        answer = "No records found"
+    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), years=years, answer=answer)
+
 
 @app.route('/stats/wins-by-nation', methods=['POST'])
 def stats_wins_by_nation():
@@ -296,13 +345,16 @@ def stats_wins_by_nation():
             all = all + 1
             if match.winner == 2:
                 win = win + 1
-        players = Player.query.all()
+    players = Player.query.all()
     tours = Tournament.query.all()
+    years = []
+    for tour in tours:
+        years.append(tour.date_from.year)
     if all > 0:
         answer = "" + str(round(win/all, 4) * 100) + "% (" + str(win) + "/" + str(all) + ")"
     else:
         answer = "No records found"
-    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), answer=answer)
+    return render_template("stats.html", players=players, tournaments=tours, player_length=len(players), tournament_length=len(tours), years=years, answer=answer)
 
 @app.route('/draw', methods=['GET'])
 def get_draw_selection():
